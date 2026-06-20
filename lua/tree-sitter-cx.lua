@@ -10,6 +10,8 @@ function M.setup()
     },
     filetype = 'cx',
   }
+
+  vim.treesitter.language.register('cx', 'cx')
 end
 
 return M
