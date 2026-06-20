@@ -27,7 +27,7 @@
 ] @type.builtin
 
 ; Generic type parameters (@T)
-(generic_param) @type.builtin
+(generic_param) @AlabasterGenericParam
 
 ; Type identifiers in type positions
 (type_specifier (identifier) @type)
