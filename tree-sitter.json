@@ -1,0 +1,30 @@
+{
+  "grammars": [
+    {
+      "name": "cx",
+      "camelcase": "Cx",
+      "scope": "source.cx",
+      "path": ".",
+      "file-types": [
+        "cx"
+      ],
+      "highlights": "queries/cx/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for the Cx programming language",
+    "links": {
+      "repository": "https://github.com/tree-sitter/tree-sitter-cx"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
