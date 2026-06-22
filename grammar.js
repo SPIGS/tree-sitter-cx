@@ -9,6 +9,7 @@ module.exports = grammar({
     [$.type_specifier, $.declarator],
     [$.type_specifier, $.parameter],
     [$.type_argument_list, $.argument_list],
+    [$.variant_specifier, $.variant_forward_declaration, $.variant_declaration],
   ],
 
   rules: {
@@ -20,6 +21,7 @@ module.exports = grammar({
       $.struct_declaration,
       $.enum_declaration,
       $.variant_declaration,
+      $.variant_forward_declaration,
       $.typedef_declaration,
       $.declaration,
       $.preproc_directive,
@@ -195,9 +197,16 @@ module.exports = grammar({
       optional(seq('=', $._expression)),
     ),
 
+    variant_forward_declaration: $ => seq(
+      'variant',
+      field('name', $.identifier),
+      ';',
+    ),
+
     variant_declaration: $ => prec(5, seq(
       'variant',
       field('name', $.identifier),
+      optional($.generic_param_list),
       '{',
       $.type_specifier,
       repeat(seq(',', $.type_specifier)),

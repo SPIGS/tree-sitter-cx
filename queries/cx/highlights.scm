@@ -45,6 +45,7 @@
 (struct_declaration name: (identifier) @AlabasterDefinition)
 (enum_declaration name: (identifier) @AlabasterDefinition)
 (variant_declaration name: (identifier) @AlabasterDefinition)
+(variant_forward_declaration name: (identifier) @AlabasterDefinition)
 
 ; Typedef names
 (typedef_declaration (identifier) @AlabasterDefinition)

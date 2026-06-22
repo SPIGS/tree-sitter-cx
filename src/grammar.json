@@ -30,6 +30,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "variant_forward_declaration"
+        },
+        {
+          "type": "SYMBOL",
           "name": "typedef_declaration"
         },
         {
@@ -1091,6 +1095,27 @@
         }
       ]
     },
+    "variant_forward_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "variant"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
     "variant_declaration": {
       "type": "PREC",
       "value": 5,
@@ -1108,6 +1133,18 @@
               "type": "SYMBOL",
               "name": "identifier"
             }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "generic_param_list"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "STRING",
@@ -3145,6 +3182,11 @@
     [
       "type_argument_list",
       "argument_list"
+    ],
+    [
+      "variant_specifier",
+      "variant_forward_declaration",
+      "variant_declaration"
     ]
   ],
   "precedences": [],
