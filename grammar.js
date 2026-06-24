@@ -10,6 +10,7 @@ module.exports = grammar({
     [$.type_specifier, $.parameter],
     [$.type_argument_list, $.argument_list],
     [$.variant_specifier, $.variant_forward_declaration, $.variant_declaration],
+    [$.auto_declaration, $.storage_class],
   ],
 
   rules: {
@@ -24,6 +25,7 @@ module.exports = grammar({
       $.variant_forward_declaration,
       $.typedef_declaration,
       $.declaration,
+      $.auto_declaration,
       $.preproc_directive,
       ';',
     ),
@@ -31,7 +33,31 @@ module.exports = grammar({
     // ---------------------------------------------------------------
     // Preprocessor
     // ---------------------------------------------------------------
-    preproc_directive: $ => token(seq('#', /[^\n]*/)),
+    preproc_directive: $ => choice(
+      $.preproc_include,
+      $.preproc_define,
+      $.preproc_other,
+    ),
+
+    preproc_include: $ => seq(
+      token(prec(1, seq('#', /\s*/, 'include'))),
+      field('path', choice(
+        $.system_lib_string,
+        $.string_literal,
+      )),
+    ),
+
+    system_lib_string: $ => token(seq('<', /[^>\n]+/, '>')),
+
+    preproc_define: $ => seq(
+      token(prec(1, seq('#', /\s*/, 'define'))),
+      field('name', $.identifier),
+      optional(field('value', $.preproc_value)),
+    ),
+
+    preproc_value: $ => /[^\n]+/,
+
+    preproc_other: $ => token(seq('#', /[^\n]*/)),
 
     // ---------------------------------------------------------------
     // Comments
@@ -99,6 +125,14 @@ module.exports = grammar({
       $.type_specifier,
       optional($.struct_body),
       $.identifier,
+      ';',
+    ),
+
+    auto_declaration: $ => seq(
+      'auto',
+      field('name', $.identifier),
+      '=',
+      $._expression,
       ';',
     ),
 
@@ -251,6 +285,7 @@ module.exports = grammar({
     _statement: $ => choice(
       $.block,
       $.declaration,
+      $.auto_declaration,
       $.expression_statement,
       $.if_statement,
       $.while_statement,

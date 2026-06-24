@@ -47,6 +47,9 @@
 (variant_declaration name: (identifier) @AlabasterDefinition)
 (variant_forward_declaration name: (identifier) @AlabasterDefinition)
 
+; Auto declarations
+(auto_declaration name: (identifier) @AlabasterDefinition)
+
 ; Typedef names
 (typedef_declaration (identifier) @AlabasterDefinition)
 
@@ -77,7 +80,12 @@
 (comment) @comment
 
 ; Preprocessor
-(preproc_directive) @keyword
+(preproc_other) @keyword
+(preproc_include) @keyword
+(preproc_include path: (system_lib_string) @string)
+(preproc_include path: (string_literal) @string)
+(preproc_define) @keyword
+(preproc_define name: (identifier) @constant.macro)
 
 ; Operators
 [
